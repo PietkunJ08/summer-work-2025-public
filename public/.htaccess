@@ -1,0 +1,7 @@
+AuthType Basic
+AuthName "Bean & Brew – dostęp chroniony"
+AuthUserFile /f:/projects/summer-work-2025/public/.htpasswd
+Require valid-user
+
+<?php
+echo __DIR__;
