@@ -4,4 +4,4 @@ AuthUserFile /f:/projects/summer-work-2025/public/.htpasswd
 Require valid-user
 
 <?php
-echo __DIR__;
+echo __DIR_;
