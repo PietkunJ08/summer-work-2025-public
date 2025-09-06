@@ -1,4 +1,4 @@
-const db = require('../../config/db');
+const db = require('../db');
 
 exports.getMe = async (req, res) => {
     const { userId } = req.user;
