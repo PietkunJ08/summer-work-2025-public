@@ -39,7 +39,7 @@ export default function Account() {
 
     (async () => {
         try {
-            const res = await fetch(`${API_BASE}/api/users/me`, {
+            const res = await fetch(apiUrl("/api/users/me"), {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
