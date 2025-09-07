@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-
-const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:5000";
+import { apiUrl } from "../config/api";
 
 const CenterBox = styled(motion.div)`
   background: rgba(255, 255, 255, 0.28);
@@ -45,7 +44,7 @@ export default function Account() {
 
     (async () => {
         try {
-            const res = await fetch(`${API_BASE}/api/users/me`, {
+            const res = await fetch(apiUrl("/api/users/me"), {
                 headers: { Authorization: `Bearer ${token}` }
             });
 

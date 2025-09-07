@@ -15,10 +15,13 @@ module.exports = function authenticateToken(req, res, next) {
 
   try {
     const payload = jwt.verify(token, secret);
-    // spodziewamy się { userId, role }
-    req.user = { userId: payload.userId, role: payload.role };
+    // ⬇️ obsłuż oba warianty: userId i sub
+    const userId = payload.userId ?? payload.sub;
+    if (!userId) return res.status(401).json({ error: 'Invalid token payload' });
+
+    req.user = { userId, role: payload.role || 'user' };
     next();
-  } catch (e) {
+  } catch {
     return res.status(401).json({ error: 'Invalid or expired token' });
   }
 };
