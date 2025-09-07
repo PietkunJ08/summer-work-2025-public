@@ -21,6 +21,10 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.options(/.*/, cors(corsOptions));
+app.use((err, _req, res, _next) => {
+  console.error("Unhandled error:", err);
+  res.status(500).json({ error: "internal" });
+});
 
 app.use(express.json());
 
@@ -39,3 +43,5 @@ app.get("/api/db/health", async (_req, res) => {
 
 const port = process.env.PORT || 5000;
 app.listen(port, "0.0.0.0", () => console.log(`API listening on :${port}`));
+process.on("unhandledRejection", (e) => console.error("unhandledRejection:", e));
+process.on("uncaughtException", (e) => console.error("uncaughtException:", e));
