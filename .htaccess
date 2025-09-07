@@ -1,6 +1,6 @@
 AuthType Basic
 AuthName "Bean & Brew – dostęp chroniony"
-AuthUserFile /f:/projects/summer-work-2025/public/.htpasswd
+AuthUserFile https://github.com/PietkunJ08/summer-work-2025-public/edit/main/.htpasswd
 Require valid-user
 
 <?php
