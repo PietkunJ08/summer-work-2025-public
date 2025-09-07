@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { apiUrl } from "../config/api";
 
 const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:5000";
 
