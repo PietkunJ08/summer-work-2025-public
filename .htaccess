@@ -1,7 +1,0 @@
-AuthType Basic
-AuthName "Bean & Brew – dostęp chroniony"
-AuthUserFile .htpasswsd
-Require valid-user
-
-<?php
-echo _DIR_;
