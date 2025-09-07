@@ -3,6 +3,33 @@ const db = require("../db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+router.post("/register", async (req, res) => {
+  try {
+    const { name, email, password } = req.body || {};
+    if (!name || !email || !password) return res.status(400).json({ error: "Name, email, password required" });
+
+    const exists = await db.query("SELECT 1 FROM users WHERE email=$1", [email]);
+    if (exists.rowCount) return res.status(409).json({ error: "Email already in use" });
+
+    const hash = await bcrypt.hash(password, 10);
+    const { rows } = await db.query(
+      `INSERT INTO users (name, email, password_hash)
+       VALUES ($1,$2,$3)
+       RETURNING id, name, email, role, created_at`,
+      [name, email, hash]
+    );
+
+    const user = rows[0];
+    const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
+
+    res.status(201).json({ user, token, message: "Your account has been created 🎉" });
+  } catch (e) {
+    console.error("REGISTER ERROR:", e);
+    if (e.code === "23505") return res.status(409).json({ error: "Email already in use" });
+    return res.status(500).json({ error: "Registration failed" });
+  }
+});
+
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body || {};
